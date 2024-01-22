@@ -1,0 +1,17 @@
+api:
+    groupId: "2848a844-05a7-4de3-ab5d-b40cdb24fc20"
+    artifactId: "check-in-papi"
+    version: "1.0.0"
+    spec: "resource::${api.groupId}:${api.artifactId}:${api.version}:oas:zip:api.json"
+    majorVersion: "v1"
+    id: "19250261"
+
+https:
+    port: "8081"
+
+tls.keystore:
+    type: "pkcs12"
+    path: "certs/check-in-papi.p12"
+    alias: "server"
+    password: "mule12345"
+    keyPassword: "mule12345" 
