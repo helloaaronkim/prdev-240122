@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>2848a844-05a7-4de3-ab5d-b40cdb24fc20</groupId>
+		<artifactId>solutions-bom</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../bom/pom.xml</relativePath>
+	</parent>
+
+	<groupId>2848a844-05a7-4de3-ab5d-b40cdb24fc20</groupId>
+	<artifactId>solutions-parent-pom</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<name>solutions-parent-pom</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<app.runtime>4.5.1</app.runtime>
+		<mule.maven.plugin.version>4.0.0</mule.maven.plugin.version>
+	</properties>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.3.1</version>
+					<configuration>
+						<nonFilteredFileExtensions>
+							<nonFilteredFileExtension>p12</nonFilteredFileExtension>
+							<nonFilteredFileExtension>crt</nonFilteredFileExtension>
+							<nonFilteredFileExtension>pem</nonFilteredFileExtension>
+						</nonFilteredFileExtensions>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.2.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.mule.tools.maven</groupId>
+					<artifactId>mule-maven-plugin</artifactId>
+					<version>${mule.maven.plugin.version}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<cloudhub2Deployment>
+						<businessGroup/> 
+						<environment>prod</environment>
+						<muleVersion>${app.runtime.semver}</muleVersion>
+						<target>Cloudhub-US-East-2</target>
+						<provider>MC</provider>
+						<replicas>1</replicas>
+						<vCores>0.1</vCores>
+						<applicationName>${project.name}</applicationName>
+						<connectedAppClientId>${ap.ca.client_id}</connectedAppClientId>
+						<connectedAppClientSecret>${ap.ca.client_secret}</connectedAppClientSecret>
+						<connectedAppGrantType>client_credentials</connectedAppGrantType>
+						<properties>
+							<anypoint.platform.client_id>${ap.client_id}</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>${ap.client_secret}</anypoint.platform.client_secret>
+						</properties>
+						<deploymentSettings>
+							<http>
+							<inbound>
+								<lastMileSecurity>true</lastMileSecurity>
+							</inbound>
+							</http>
+						</deploymentSettings>
+						<integrations>
+							<services>
+							<objectStoreV2>
+								<enabled>true</enabled>
+							</objectStoreV2>
+							</services>
+						</integrations>
+						</cloudhub2Deployment>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.mule.connectors</groupId>
+				<artifactId>mule-http-connector</artifactId>
+				<version>1.8.0</version>
+				<classifier>mule-plugin</classifier>
+			</dependency>
+			<dependency>
+				<groupId>org.mule.modules</groupId>
+				<artifactId>mule-apikit-module</artifactId>
+				<version>1.9.2</version>
+				<classifier>mule-plugin</classifier>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

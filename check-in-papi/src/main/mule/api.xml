@@ -20,15 +20,6 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 		<error-handler ref="api-error-handler" />
 	</flow>
 	<flow name="api-console">
-		<http:listener config-ref="apiHttpListenerConfig" path="/console/${api.majorVersion}/*">
-			<http:response statusCode="#[vars.httpStatus default 200]">
-				<http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
-			</http:response>
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body><![CDATA[#[payload]]]></http:body>
-				<http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
-			</http:error-response>
-		</http:listener>
 		<apikit:console config-ref="apiConfig" />
 		<error-handler ref="api-console-error-handler" />
 	</flow>
