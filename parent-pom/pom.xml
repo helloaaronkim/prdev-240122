@@ -18,11 +18,29 @@
 	<name>solutions-parent-pom</name>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- Not explicitly used but needed for deployment to Exchange,
+		otherwise Exchange cannot determine the asset type -->
+		<type>custom</type>
+		<!-- for automated deployments -->
+		<deployment.env>set with -Ddeployment.env=...</deployment.env>
+		<deployment.suffix>-${deployment.env}</deployment.suffix>
+		<deployment.name>${project.name}${deployment.suffix}</deployment.name>
+		<!-- requires AP environments to have the same name as the env
+		property value in Mule apps (which determines the property files to
+		load) -->
+		<ap.environment>${deployment.env}</ap.environment>
+		<ap.client_id>set with -Dap.client_id=...</ap.client_id>
+		<ap.client_secret>set with -Dap.client_secret=...</ap.client_secret>
+		<ap.ca.client_id>set with -Dap.ca.client_id=...</ap.ca.client_id>
+		<ap.ca.client_secret>set with -Dap.ca.client_secret=...</ap.ca.client_secret>
+		<!-- set encrypt.key for decrypting secure (encryped) properties
+		files (but don't set it here!) -->
 
-		<app.runtime>4.5.1</app.runtime>
-		<mule.maven.plugin.version>4.0.0</mule.maven.plugin.version>
+        <api.layer.eapi>Experience</api.layer.eapi>
+        <api.layer.papi>Process</api.layer.papi>
+        <api.layer.sapi>System</api.layer.sapi>
+        <api.layer.backend>Backend</api.layer.backend>
+        <api.layer.none>None</api.layer.none>		
 	</properties>
 
 	<build>
@@ -66,20 +84,28 @@
 					<configuration>
 						<cloudhub2Deployment>
 						<businessGroup/> 
-						<environment>prod</environment>
+						<environment>${ap.environment}</environment>
 						<muleVersion>${app.runtime.semver}</muleVersion>
 						<target>Cloudhub-US-East-2</target>
 						<provider>MC</provider>
 						<replicas>1</replicas>
 						<vCores>0.1</vCores>
-						<applicationName>${project.name}</applicationName>
+						<applicationName>${deployment.name}</applicationName>
 						<connectedAppClientId>${ap.ca.client_id}</connectedAppClientId>
 						<connectedAppClientSecret>${ap.ca.client_secret}</connectedAppClientSecret>
 						<connectedAppGrantType>client_credentials</connectedAppGrantType>
 						<properties>
 							<anypoint.platform.client_id>${ap.client_id}</anypoint.platform.client_id>
 							<anypoint.platform.client_secret>${ap.client_secret}</anypoint.platform.client_secret>
+							<env>${deployment.env}</env>
+
+							<anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
+							<anypoint.platform.visualizer.displayName>${project.name}</anypoint.platform.visualizer.displayName>
+							<anypoint.platform.visualizer.layer>${api.layer}</anypoint.platform.visualizer.layer>
 						</properties>
+						<secureProperties>
+							<encrypt.key>${encrypt.key}</encrypt.key>
+						</secureProperties>
 						<deploymentSettings>
 							<http>
 							<inbound>

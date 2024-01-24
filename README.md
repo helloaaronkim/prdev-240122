@@ -24,4 +24,11 @@
 -M-Danypoint.platform.client_secret=25CbA0d940d24b4cb8FC498c3DC48196
 
 
-mvn -DmuleDeploy deploy -DskipTests=true -Dap.client_id=85317fa0b55c42e3babaa7584ff2b0bb -Dap.client_secret=25CbA0d940d24b4cb8FC498c3DC48196 -Dap.ca.client_id=8f7a655357d947a29ffc2c24a8c09cc7 -Dap.ca.client_secret=a3d95d84F4824A45b18cBaddE2C56009
+mvn -DmuleDeploy deploy -Dap.client_id=85317fa0b55c42e3babaa7584ff2b0bb -Dap.client_secret=25CbA0d940d24b4cb8FC498c3DC48196 -Dap.ca.client_id=8f7a655357d947a29ffc2c24a8c09cc7 -Dap.ca.client_secret=a3d95d84F4824A45b18cBaddE2C56009
+
+//
+mvn -DmuleDeploy deploy -Dap.client_id=85317fa0b55c42e3babaa7584ff2b0bb -Dap.client_secret=25CbA0d940d24b4cb8FC498c3DC48196 -Dap.ca.client_id=8f7a655357d947a29ffc2c24a8c09cc7 -Dap.ca.client_secret=a3d95d84F4824A45b18cBaddE2C56009 -Dencrypt.key=secure12345 -Ddeployment.env=dev -DskipTests=true
+
+mvn -DmuleDeploy deploy -Dap.client_id=85317fa0b55c42e3babaa7584ff2b0bb -Dap.client_secret=25CbA0d940d24b4cb8FC498c3DC48196 -Dap.ca.client_id=8f7a655357d947a29ffc2c24a8c09cc7 -Dap.ca.client_secret=a3d95d84F4824A45b18cBaddE2C56009 -Dencrypt.key=secure12345 -Ddeployment.env=stg -DskipTests=true
+
+mvn -DmuleDeploy deploy -Dap.client_id=85317fa0b55c42e3babaa7584ff2b0bb -Dap.client_secret=25CbA0d940d24b4cb8FC498c3DC48196 -Dap.ca.client_id=8f7a655357d947a29ffc2c24a8c09cc7 -Dap.ca.client_secret=a3d95d84F4824A45b18cBaddE2C56009 -Dencrypt.key=secure12345 -Ddeployment.env=prod -Ddeployment.suffix= -DskipTests=true
